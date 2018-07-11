@@ -15,12 +15,17 @@
 // motor setup
 // http://zelectro.cc/Motor_shield_L298N_Arduino
 ////////////////////// 
-int ENA = 9;
-int IN1 = 7;
-int IN2 = 6;
-int IN3 = 5;
-int IN4 = 4;
-int ENB = 3;
+//int ENA = 9;
+//int IN1 = 7;
+//int IN2 = 6;
+//int IN3 = 5;
+//int IN4 = 4;
+//int ENB = 3;
+int IN1 = 10;
+int IN2 = 11;
+int IN3 = 46;
+int IN4 = 44;
+
 int i;
 ///////////////////////
 
@@ -77,12 +82,12 @@ int lenght_out;
 
 void setup() {
 // motor
- pinMode (ENA, OUTPUT); 
+// pinMode (ENA, OUTPUT); 
  pinMode (IN1, OUTPUT);
  pinMode (IN2, OUTPUT);
  pinMode (IN3, OUTPUT);
  pinMode (IN4, OUTPUT);
- pinMode (ENB, OUTPUT); 
+// pinMode (ENB, OUTPUT); 
 
 
 //  dbgvalue1 = 0;
@@ -279,6 +284,49 @@ void loop()
 //  delay(250);
 
 /////////////////////////////
+ // digitalWrite (IN3, HIGH);
+ // digitalWrite (IN4, LOW);
+ // подаем на вывод ENB управляющий ШИМ сигнал 
+ analogWrite(IN1,0);
+ analogWrite(IN2,0);
+ analogWrite(IN3,0);
+ analogWrite(IN4,0);
+ delay(2000);
+ analogWrite(IN2,100);
+ analogWrite(IN4,100);
+ delay(2000);
+ analogWrite(IN1,0);
+ analogWrite(IN2,0);
+ analogWrite(IN3,0);
+ analogWrite(IN4,0);
+ delay(2000);
+analogWrite(IN2,155);
+ analogWrite(IN4,155);
+ delay(2000);
+ analogWrite(IN1,0);
+ analogWrite(IN2,0);
+ analogWrite(IN3,0);
+ analogWrite(IN4,0);
+ delay(2000);
+ analogWrite(IN1,255);
+ analogWrite(IN3,255);
+ delay(2000);
+ analogWrite(IN1,0);
+ analogWrite(IN2,0);
+ analogWrite(IN3,0);
+ analogWrite(IN4,0);
+ delay(2000);
+ analogWrite(IN1,55);
+ analogWrite(IN3,55);
+ delay(2000);
+// analogWrite(IN1,0);
+// analogWrite(IN2,0);
+// analogWrite(IN3,0);
+// analogWrite(IN4,0);
+ // Останавливаем мотор повад на вывод ENB сигнал низкого уровеня. 
+ // Состояние выводов "IN" роли не играет.
+ // analogWrite(ENB,0);
+// delay(5000);
 //  // На пару выводов "IN" поданы разноименные сигналы, мотор готов к вращаению
 //  digitalWrite (IN3, HIGH);
 //  digitalWrite (IN4, LOW);
@@ -295,7 +343,7 @@ void loop()
 //  delay(5000);
 //
 ///////////////////////
-  digitalWrite (IN2, HIGH);
+/*  digitalWrite (IN2, HIGH);
   digitalWrite (IN1, LOW); 
   digitalWrite (IN4, HIGH);
   digitalWrite (IN3, LOW); 
@@ -321,6 +369,6 @@ void loop()
   analogWrite (ENA, 0);
   analogWrite (ENB, 0);
   delay(8000);
-
+*/
 ///////////////////////
 }
