@@ -66,7 +66,7 @@ char tbs[500];
 //unsigned long prevTime;
 //unsigned long currentTime;
 
-const int LENGHT_BUF_IN = 100;
+const int LENGHT_BUF_IN = 200;
 const int LENGHT_BUF_OUT = 100;
 
 char buf_out[LENGHT_BUF_OUT];
@@ -97,7 +97,7 @@ void setup() {
 //  dbgvalue5 = 0;
 //  prevTime = millis();
   // открываем последовательный порт:
-//  Serial.begin (115200);
+  Serial.begin (115200);
   Serial3.begin (115200);
   // задаем входные и выходные контакты:
 //  pinMode(trigPin1, OUTPUT);
@@ -168,7 +168,7 @@ void loop()
 //  prevTime  = currentTime;
 //  currentTime = millis();
 //  Serial.println(currentTime - prevTime);
-//  if (Serial3.available()) {
+//  while (Serial3.available()) {
 //    int inByte = Serial3.read();
 //    Serial.write(inByte);
 //  }
@@ -177,10 +177,10 @@ void loop()
 //    Serial3.write(inByte);
 //  }
 
-//    if (Serial3.available() > 0){
-//      lenght_in = Serial3.readBytes(buf_in, LENGHT_BUF_IN);
-//      Serial.write(buf_in, lenght_in);
-//    }
+    if (Serial3.available() > 0){
+      lenght_in = Serial3.readBytes(buf_in, LENGHT_BUF_IN);
+      Serial.write(buf_in, lenght_in);
+    }
 //    if (Serial.available() > 0){
 //      lenght_out = Serial.readBytes(buf_out, LENGHT_BUF_OUT);
 //      Serial3.write(buf_out, lenght_out);
@@ -189,7 +189,7 @@ void loop()
 //  for (int i = trigPin2; i < 14; i=i+2) {
 //    Serial3.print(getDistance(i, i+1));
 //    Serial3.print(",");
-////    delay(10);
+////    delay(10);s
 //  }
 //  Serial3.print(getDistance(trigPin2, echoPin2));
 //  Serial3.print(",");
@@ -284,91 +284,37 @@ void loop()
 //  delay(250);
 
 /////////////////////////////
- // digitalWrite (IN3, HIGH);
- // digitalWrite (IN4, LOW);
- // подаем на вывод ENB управляющий ШИМ сигнал 
- analogWrite(IN1,0);
- analogWrite(IN2,0);
- analogWrite(IN3,0);
- analogWrite(IN4,0);
- delay(2000);
- analogWrite(IN2,100);
- analogWrite(IN4,100);
- delay(2000);
- analogWrite(IN1,0);
- analogWrite(IN2,0);
- analogWrite(IN3,0);
- analogWrite(IN4,0);
- delay(2000);
-analogWrite(IN2,155);
- analogWrite(IN4,155);
- delay(2000);
- analogWrite(IN1,0);
- analogWrite(IN2,0);
- analogWrite(IN3,0);
- analogWrite(IN4,0);
- delay(2000);
- analogWrite(IN1,255);
- analogWrite(IN3,255);
- delay(2000);
- analogWrite(IN1,0);
- analogWrite(IN2,0);
- analogWrite(IN3,0);
- analogWrite(IN4,0);
- delay(2000);
- analogWrite(IN1,55);
- analogWrite(IN3,55);
- delay(2000);
 // analogWrite(IN1,0);
 // analogWrite(IN2,0);
 // analogWrite(IN3,0);
 // analogWrite(IN4,0);
- // Останавливаем мотор повад на вывод ENB сигнал низкого уровеня. 
- // Состояние выводов "IN" роли не играет.
- // analogWrite(ENB,0);
-// delay(5000);
-//  // На пару выводов "IN" поданы разноименные сигналы, мотор готов к вращаению
-//  digitalWrite (IN3, HIGH);
-//  digitalWrite (IN4, LOW);
-//  // подаем на вывод ENB управляющий ШИМ сигнал 
-//  analogWrite(ENB,155);
-//  delay(2000);
-//  analogWrite(ENB,205);
-//  delay(2000);
-//  analogWrite(ENB,255);
-//  delay(2000);
-//  // Останавливаем мотор повад на вывод ENB сигнал низкого уровеня. 
-//  // Состояние выводов "IN" роли не играет.
-//  analogWrite(ENB,0);
-//  delay(5000);
-//
-///////////////////////
-/*  digitalWrite (IN2, HIGH);
-  digitalWrite (IN1, LOW); 
-  digitalWrite (IN4, HIGH);
-  digitalWrite (IN3, LOW); 
-  for (i = 50; i <= 180; ++i)
-  {
-      analogWrite(ENA, i);
-      analogWrite(ENB, i);
-      delay(30);
-  }
-  analogWrite (ENA, 0);
-  analogWrite (ENB, 0);
-  delay(500);
-  digitalWrite (IN1, HIGH);
-  digitalWrite (IN2, LOW); 
-  digitalWrite (IN3, HIGH);
-  digitalWrite (IN4, LOW);
-  for (i = 50; i <= 180; ++i)
-  {
-      analogWrite(ENA, i);
-      analogWrite(ENB, i);
-      delay(30);
-  }
-  analogWrite (ENA, 0);
-  analogWrite (ENB, 0);
-  delay(8000);
-*/
+// delay(2000);
+// analogWrite(IN2,100);
+// analogWrite(IN4,100);
+// delay(2000);
+// analogWrite(IN1,0);
+// analogWrite(IN2,0);
+// analogWrite(IN3,0);
+// analogWrite(IN4,0);
+// delay(2000);
+//analogWrite(IN2,155);
+// analogWrite(IN4,155);
+// delay(2000);
+// analogWrite(IN1,0);
+// analogWrite(IN2,0);
+// analogWrite(IN3,0);
+// analogWrite(IN4,0);
+// delay(2000);
+// analogWrite(IN1,255);
+// analogWrite(IN3,255);
+// delay(2000);
+// analogWrite(IN1,0);
+// analogWrite(IN2,0);
+// analogWrite(IN3,0);
+// analogWrite(IN4,0);
+// delay(2000);
+// analogWrite(IN1,55);
+// analogWrite(IN3,55);
+// delay(2000);
 ///////////////////////
 }
