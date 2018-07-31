@@ -107,5 +107,36 @@ void loop()
     Serial.write(buf_in, lenght_in);
   }
   
+  d1 = getDistance(trigPin0 , echoPin0);
+//  delay(10);
+  d2 = getDistance(trigPin1, echoPin1);
+//  delay(10);
+  d3 = getDistance(trigPin2, echoPin2);
+//  delay(10);
+  d4 = getDistance(trigPin3, echoPin3);
+//  delay(10);
+  d5 = getDistance(trigPin4, echoPin4);
+//  delay(10);
+  d6 = getDistance(trigPin5, echoPin5);
+//  delay(10);
+
+  Serial3.print(d1);
+  Serial3.print(",\t");
+
+  Serial3.print(d2);
+  Serial3.print(",\t");
+  
+  Serial3.print(d3);
+  Serial3.print(",\t");
+  
+  Serial3.print(d4);
+  Serial3.print(",\t");
+  
+  Serial3.print(d5);
+  Serial3.print(",\t");
+  
+  Serial3.print(d6);
+  Serial3.println(";");
+
   delay(200);
 }
