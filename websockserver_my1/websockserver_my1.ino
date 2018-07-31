@@ -12,8 +12,8 @@ String WebPage = "<!DOCTYPE html><html><style>input[type=\"text\"]{width: 90%; h
 WebSocketsServer webSocket = WebSocketsServer(81);
 //ESP8266WebServer server(80);
 
-unsigned long prevTime;
-unsigned long currentTime;
+// unsigned long prevTime;
+// unsigned long currentTime;
 
 const int LENGHT_BUF_IN = 100;
 //const int LENGHT_BUF_OUT = 100;
@@ -23,7 +23,7 @@ char buf_in[LENGHT_BUF_IN];
 char divider;
 
 void setup() {
-  prevTime = millis();
+  // prevTime = millis();
   divider = ';';
   Serial.begin(115200);
   WiFi.begin(ssid, password);
@@ -38,7 +38,8 @@ void setup() {
     Serial.print("Connected to ");
     Serial.println(ssid);
     Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
+    Serial.print(WiFi.localIP());
+    Serial.println(divider);
 
 //    server.on("/", [](){
 //    server.send(200, "text/html", WebPage);
@@ -49,14 +50,14 @@ void setup() {
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
 
-  currentTime = millis();
-  Serial.print("setup8266-");
-  Serial.println(currentTime - prevTime);
+  // currentTime = millis();
+  // Serial.print("setup8266-");
+  // Serial.println(currentTime - prevTime);
 }
 
 void loop() {
-  prevTime  = currentTime;
-  currentTime = millis();
+  // prevTime  = currentTime;
+  // currentTime = millis();
 //  Serial.println(currentTime - prevTime);
 
     webSocket.loop();
@@ -72,6 +73,7 @@ void loop() {
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
+    Serial.print("=");
    if (type == WStype_TEXT){
     for(int i = 0; i < length; i++) Serial.print((char) payload[i]);
     Serial.println();
