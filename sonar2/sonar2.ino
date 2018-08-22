@@ -1,5 +1,17 @@
 #include <stdio.h>
 #include "pins_arduino.h"
+
+
+#include <Arduino.h>
+
+//#include <ESP8266WiFi.h>
+//#include <ESP8266WiFiMulti.h>
+//#include <WebSocketsServer.h>
+//#include <Hash.h>
+
+
+
+// #define USE_SERIAL Serial1
 //////////////////////
 // motor setup
 // http://zelectro.cc/Motor_shield_L298N_Arduino
@@ -75,7 +87,9 @@ void setup() {
   pinMode(trigPin5, OUTPUT);
   pinMode(echoPin5, INPUT);
 
-  Serial3.setTimeout(100);
+//  Serial3.setTimeout(100);
+  Serial.println("setup mega ");
+  Serial.flush();
 }
 
 unsigned long getDistance(int trigPin, int echoPin)
@@ -105,38 +119,37 @@ void loop()
   if (Serial3.available() > 0){
     lenght_in = Serial3.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
     Serial.write(buf_in, lenght_in);
+    Serial.println();
+    Serial.flush();
+  
+    d1 = getDistance(trigPin0 , echoPin0);
+    d2 = getDistance(trigPin1, echoPin1);
+    d3 = getDistance(trigPin2, echoPin2);
+    d4 = getDistance(trigPin3, echoPin3);
+    d5 = getDistance(trigPin4, echoPin4);
+    d6 = getDistance(trigPin5, echoPin5);
+
+    Serial3.print(d1);
+    Serial3.print(",\t");
+
+    Serial3.print(d2);
+    Serial3.print(",\t");
+
+    Serial3.print(d3);
+    Serial3.print(",\t");
+
+    Serial3.print(d4);
+    Serial3.print(",\t");
+
+    Serial3.print(d5);
+    Serial3.print(",\t");
+
+    Serial3.print(d6);
+    Serial3.println(";");
+    Serial3.flush();
+
+  } else {
+    delay(200);
   }
-  
-  d1 = getDistance(trigPin0 , echoPin0);
-//  delay(10);
-  d2 = getDistance(trigPin1, echoPin1);
-//  delay(10);
-  d3 = getDistance(trigPin2, echoPin2);
-//  delay(10);
-  d4 = getDistance(trigPin3, echoPin3);
-//  delay(10);
-  d5 = getDistance(trigPin4, echoPin4);
-//  delay(10);
-  d6 = getDistance(trigPin5, echoPin5);
-//  delay(10);
 
-  Serial3.print(d1);
-  Serial3.print(",\t");
-
-  Serial3.print(d2);
-  Serial3.print(",\t");
-  
-  Serial3.print(d3);
-  Serial3.print(",\t");
-  
-  Serial3.print(d4);
-  Serial3.print(",\t");
-  
-  Serial3.print(d5);
-  Serial3.print(",\t");
-  
-  Serial3.print(d6);
-  Serial3.println(";");
-
-  delay(200);
 }
