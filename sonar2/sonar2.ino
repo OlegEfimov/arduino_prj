@@ -26,7 +26,7 @@ int IN1 = 10;
 int IN2 = 11;
 int IN3 = 46;
 int IN4 = 44;
-
+static int  tmp777 = 0;
 int i;
 
 int trigPin0 = 22;
@@ -51,6 +51,7 @@ unsigned long d5;
 unsigned long d6;
 char tbs[500];
 char divider;
+String tmpString = "100,\t200,\t300,\t400,\t500,\t600;";
 
 const int LENGHT_BUF_IN = 200;
 const int LENGHT_BUF_OUT = 100;
@@ -72,7 +73,7 @@ void setup() {
 //  pinMode (ENB, OUTPUT); 
 
   Serial.begin (115200);
-  Serial3.begin (115200);
+  Serial2.begin (115200);
 
   pinMode(trigPin0, OUTPUT);
   pinMode(echoPin0, INPUT);
@@ -87,9 +88,9 @@ void setup() {
   pinMode(trigPin5, OUTPUT);
   pinMode(echoPin5, INPUT);
 
-//  Serial3.setTimeout(100);
+//  Serial2.setTimeout(100);
   Serial.println("setup mega ");
-  Serial.flush();
+//  Serial.flush();
 }
 
 unsigned long getDistance(int trigPin, int echoPin)
@@ -116,37 +117,64 @@ unsigned long getDistance(int trigPin, int echoPin)
  
 void loop()
 {
-  if (Serial3.available() > 0){
-    lenght_in = Serial3.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
-    Serial.write(buf_in, lenght_in);
-    Serial.println();
-    Serial.flush();
+  if (Serial2.available() > 0){
+    lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
+    if (lenght_in > 3) {
+      Serial.write(buf_in, lenght_in);
+//      Serial.println();
+
+//    Serial.flush();
   
-    d1 = getDistance(trigPin0 , echoPin0);
-    d2 = getDistance(trigPin1, echoPin1);
-    d3 = getDistance(trigPin2, echoPin2);
-    d4 = getDistance(trigPin3, echoPin3);
-    d5 = getDistance(trigPin4, echoPin4);
-    d6 = getDistance(trigPin5, echoPin5);
+//    d1 = getDistance(trigPin0 , echoPin0);
+//    d2 = getDistance(trigPin1, echoPin1);
+//    d3 = getDistance(trigPin2, echoPin2);
+//    d4 = getDistance(trigPin3, echoPin3);
+//    d5 = getDistance(trigPin4, echoPin4);
+//    d6 = getDistance(trigPin5, echoPin5);
+//
+//    Serial2.print(d1);
+//    Serial2.print(",\t");
+//
+//    Serial2.print(d2);
+//    Serial2.print(",\t");
+//
+//    Serial2.print(d3);
+//    Serial2.print(",\t");
+//
+//    Serial2.print(d4);
+//    Serial2.print(",\t");
+//
+//    Serial2.print(d5);
+//    Serial2.print(",\t");
+//
+//    Serial2.print(d6);
+//    Serial2.println(";");
+//    Serial2.flush();
 
-    Serial3.print(d1);
-    Serial3.print(",\t");
+//    Serial2.println(tmpString);
+    Serial2.write(buf_in, lenght_in);
+    Serial2.print("++");
 
-    Serial3.print(d2);
-    Serial3.print(",\t");
+    Serial2.print(tmp777);
+    Serial2.print(",\t");
 
-    Serial3.print(d3);
-    Serial3.print(",\t");
+    Serial2.print(tmp777);
+    Serial2.print(",\t");
 
-    Serial3.print(d4);
-    Serial3.print(",\t");
+    Serial2.print(tmp777);
+    Serial2.print(",\t");
 
-    Serial3.print(d5);
-    Serial3.print(",\t");
+    Serial2.print(tmp777);
+    Serial2.print(",\t");
 
-    Serial3.print(d6);
-    Serial3.println(";");
-    Serial3.flush();
+    Serial2.print(tmp777);
+    Serial2.print(",\t");
+
+    Serial2.print(tmp777);
+    Serial2.print(";");
+
+    tmp777 = tmp777 + 1;
+  }
 
   } else {
     delay(200);
