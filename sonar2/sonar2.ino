@@ -91,7 +91,7 @@ void setup() {
   pinMode(trigPin5, OUTPUT);
   pinMode(echoPin5, INPUT);
 
-//  Serial2.setTimeout(100);
+  Serial2.setTimeout(60);
   Serial.println("setup mega ");
 //  Serial.flush();
 }
@@ -118,33 +118,8 @@ unsigned long getDistance(int trigPin, int echoPin)
   return _distance;
 }
  
-void loop()
+void getDistanceData()
 {
-//  String tmp3 = "---";
-//  String tmp4 = "+++";
-  if (Serial2.available() > 0){
-
-//    time1 = micros();
-
-    lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
-      if (lenght_in > 3) {
-  //      Serial.write(buf_in, lenght_in);
-//        Serial2.write(buf_in, lenght_in);
-//        Serial2.print("\t");
-  //      Serial.println();
-  //    delay(200);
-  
-  //    Serial.flush();
-  //    time2 = micros();
-  //    Serial.println(tmp3 + (time2 - time1));
-    } else {
-      Serial2.print("\t\t");
-    }
-  } else {
-      Serial2.print("\t\t");
-//    time1 = micros();
-//    delay(200);
-  }
     d1 = getDistance(trigPin0 , echoPin0);
     d2 = getDistance(trigPin1, echoPin1);
     d3 = getDistance(trigPin2, echoPin2);
@@ -169,37 +144,23 @@ void loop()
 
     Serial2.print(d6);
     Serial2.print(";");
-//    Serial2.flush();
+    
+//    Serial2.print("=00=");
+}
 
-//    Serial2.println(tmpString);
-//    Serial2.write(buf_in, lenght_in);
-//    Serial2.print("++");
-
-//    Serial2.print(d1);
-//    Serial2.print(",\t");
-//
-//    Serial2.print(d2);
-//    Serial2.print(",\t");
-//
-//    Serial2.print(tmp777);
-//    Serial2.print(",\t");
-//
-//    Serial2.print(tmp777);
-//    Serial2.print(",\t");
-//
-//    Serial2.print(tmp777);
-//    Serial2.print(",\t");
-//
-//    Serial2.print(tmp777);
-//    Serial2.print(";");
-
-//    tmp777 = tmp777 + 1;
-//  }
-//
-//  } else {
-    delay(400);
-//    time2 = micros();
-//    Serial.println(tmp4 + (time2 - time1));
-//  }
-
+void loop()
+{
+    if (Serial2.available() > 0){
+//      Serial2.print(" =0= ");
+      lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
+      if (lenght_in > 3) {
+        Serial.write(buf_in, lenght_in);
+//        Serial.println();
+      } else {
+//        Serial2.write(buf_in, lenght_in);
+        Serial.println();
+      }
+    }
+    getDistanceData();
+    delay(60);
 }
