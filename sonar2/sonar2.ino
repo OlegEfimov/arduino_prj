@@ -56,17 +56,17 @@ char tbs[500];
 char divider;
 String tmpString = "100,\t200,\t300,\t400,\t500,\t600;";
 
-const int LENGHT_BUF_IN = 200;
-const int LENGHT_BUF_OUT = 100;
+const int LENGHT_BUF_IN = 400;
+//const int LENGHT_BUF_OUT = 100;
 
-char buf_out[LENGHT_BUF_OUT];
+//char buf_out[LENGHT_BUF_OUT];
 char buf_in[LENGHT_BUF_IN];
 int lenght_in;
 int lenght_out;
 
 void setup() {
 
-  divider = ':';
+  divider = ';';
 // motor
 // pinMode (ENA, OUTPUT); 
   pinMode (IN1, OUTPUT);
@@ -149,16 +149,48 @@ void getDistanceData()
 }
 
 void loop()
+// {
+//     if (Serial2.available() > 0){
+//       String commands = Serial2.readUntil(divider);
+//       if (commands.lenght() > 3) {
+//         Serial.write(commands);
+//       } else {
+//         Serial.println();
+//       }
+//     }
+//     getDistanceData();
+//     delay(60);
+// }
+
+
 {
     if (Serial2.available() > 0){
+      for (int i = 0; i < 50; i++) {
+        buf_in[i]=0;
+      }
 //      Serial2.print(" =0= ");
       lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
       if (lenght_in > 3) {
-        Serial.write(buf_in, lenght_in);
-//        Serial.println();
+        buf_in[lenght_in] = 0;
+        String commandStr(buf_in);
+        int pos1 = commandStr.indexOf('=');
+        int pos2 = commandStr.indexOf('=', pos1+1);
+        String command1 = commandStr.substring(0, pos1);
+        String command2 = commandStr.substring(pos1+1, pos2);
+
+//         Serial.write(buf_in, lenght_in);
+        Serial.println("--------start---------");
+        Serial.println(commandStr);
+        Serial.println(lenght_in);
+        Serial.println(pos1);
+        Serial.println(pos2);
+        Serial.println(command1);
+        Serial.println(command2);
+        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
-        Serial.println();
+        Serial.println("--------=<3-----------");
+//        Serial.println();
       }
     }
     getDistanceData();
