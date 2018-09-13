@@ -64,7 +64,15 @@ char buf_in[LENGHT_BUF_IN];
 int lenght_in;
 int lenght_out;
 
+
+//String inputString = "";         // a String to hold incoming data
+//bool stringComplete = false;  // whether the string is complete
+
+
 void setup() {
+
+//  // reserve 200 bytes for the inputString:
+//  inputString.reserve(200);
 
   divider = ';';
 // motor
@@ -149,6 +157,39 @@ void getDistanceData()
 }
 
 void loop()
+{
+//  // print the string when a newline arrives:
+//  if (stringComplete) {
+////Serial.println("---loop if (stringComplete))---");
+////    Serial.println(inputString);
+//      if (inputString.length() > 3) {
+////        buf_in[lenght_in] = 0;
+////        String commandStr(buf_in);
+//        int pos1 = inputString.indexOf('=');
+//        int pos2 = inputString.indexOf('=', pos1+1);
+//        String command1 = inputString.substring(0, pos1);
+//        String command2 = inputString.substring(pos1+1, pos2);
+//
+////         Serial.write(buf_in, lenght_in);
+//        Serial.println("--------start---------");
+//        Serial.println(inputString);
+//        Serial.println(inputString.length());
+//        Serial.println(pos1);
+//        Serial.println(pos2);
+//        Serial.println(command1);
+//        Serial.println(command2);
+//        Serial.println("--------end-----------");
+//      } else {
+////        Serial2.write(buf_in, lenght_in);
+//        Serial.println("--------=<3-----------");
+////        Serial.println();
+//      }
+//
+//    // clear the string:
+//    inputString = "";
+//    stringComplete = false;
+//  }
+
 // {
 //     if (Serial2.available() > 0){
 //       String commands = Serial2.readUntil(divider);
@@ -163,14 +204,14 @@ void loop()
 // }
 
 
-{
+//{
     if (Serial2.available() > 0){
       for (int i = 0; i < 50; i++) {
         buf_in[i]=0;
       }
 //      Serial2.print(" =0= ");
       lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
-      if (lenght_in > 3) {
+      if (lenght_in > 3 && lenght_in < 11) {
         buf_in[lenght_in] = 0;
         String commandStr(buf_in);
         int pos1 = commandStr.indexOf('=');
@@ -179,14 +220,14 @@ void loop()
         String command2 = commandStr.substring(pos1+1, pos2);
 
 //         Serial.write(buf_in, lenght_in);
-        Serial.println("--------start---------");
-        Serial.println(commandStr);
-        Serial.println(lenght_in);
-        Serial.println(pos1);
-        Serial.println(pos2);
+//        Serial.println("--------start---------");
+//        Serial.println(commandStr);
+//        Serial.println(lenght_in);
+//        Serial.println(pos1);
+//        Serial.println(pos2);
         Serial.println(command1);
         Serial.println(command2);
-        Serial.println("--------end-----------");
+//        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
         Serial.println("--------=<3-----------");
@@ -196,3 +237,18 @@ void loop()
     getDistanceData();
     delay(60);
 }
+
+//void serialEvent2() {
+////Serial.println("---serialEvent()---");
+//
+//    // get the new byte:
+//    char inChar = (char)Serial2.read();
+//    // add it to the inputString:
+//    inputString += inChar;
+//    // if the incoming character is a newline, set a flag so the main loop can
+//    // do something about it:
+//    if (inChar == divider) {
+//      stringComplete = true;
+//     }
+//  }
+//  
