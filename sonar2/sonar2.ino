@@ -64,6 +64,9 @@ char buf_in[LENGHT_BUF_IN];
 int lenght_in;
 int lenght_out;
 
+int intCmd1;
+int intCmd2;
+
 
 //String inputString = "";         // a String to hold incoming data
 //bool stringComplete = false;  // whether the string is complete
@@ -218,6 +221,10 @@ void loop()
         int pos2 = commandStr.indexOf('=', pos1+1);
         String command1 = commandStr.substring(0, pos1);
         String command2 = commandStr.substring(pos1+1, pos2);
+        intCmd1 = command1.toInt();
+        intCmd2 = command2.toInt();
+        Serial.println(intCmd1);
+        Serial.println(intCmd2);
 
 //         Serial.write(buf_in, lenght_in);
 //        Serial.println("--------start---------");
@@ -225,17 +232,36 @@ void loop()
 //        Serial.println(lenght_in);
 //        Serial.println(pos1);
 //        Serial.println(pos2);
-        Serial.println(command1);
-        Serial.println(command2);
+//        Serial.println(command1);
+//        Serial.println(command2);
+        if (intCmd1 > 0) {
+          analogWrite(IN1,0);
+          analogWrite(IN2,intCmd1);
+        } else {
+          analogWrite(IN1,intCmd1);
+          analogWrite(IN2,0);
+        }
+        if (intCmd2 > 0) {
+          analogWrite(IN3,0);
+          analogWrite(IN4,intCmd2);
+        } else {
+          analogWrite(IN3,intCmd2);
+          analogWrite(IN4,0);
+        }
 //        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
         Serial.println("--------=<3-----------");
+         analogWrite(IN1,0);
+         analogWrite(IN2,0);
+         analogWrite(IN3,0);
+         analogWrite(IN4,0);
 //        Serial.println();
       }
     }
     getDistanceData();
     delay(60);
+
 }
 
 //void serialEvent2() {
