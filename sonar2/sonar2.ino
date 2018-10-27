@@ -214,7 +214,8 @@ void loop()
       }
 //      Serial2.print(" =0= ");
       lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
-      if (lenght_in > 3 && lenght_in < 11) {
+//      if (lenght_in > 3 && lenght_in < 11) {
+      if (true) {
         buf_in[lenght_in] = 0;
         String commandStr(buf_in);
         int pos1 = commandStr.indexOf('=');
@@ -225,6 +226,7 @@ void loop()
         intCmd2 = command2.toInt();
         Serial.println(intCmd1);
         Serial.println(intCmd2);
+        Serial.println(commandStr);
 
 //         Serial.write(buf_in, lenght_in);
 //        Serial.println("--------start---------");
@@ -238,14 +240,14 @@ void loop()
           analogWrite(IN1,0);
           analogWrite(IN2,intCmd1);
         } else {
-          analogWrite(IN1,intCmd1);
+          analogWrite(IN1,-intCmd1);
           analogWrite(IN2,0);
         }
         if (intCmd2 > 0) {
           analogWrite(IN3,0);
           analogWrite(IN4,intCmd2);
         } else {
-          analogWrite(IN3,intCmd2);
+          analogWrite(IN3,-intCmd2);
           analogWrite(IN4,0);
         }
 //        Serial.println("--------end-----------");
@@ -259,7 +261,7 @@ void loop()
 //        Serial.println();
       }
     }
-    getDistanceData();
+//    getDistanceData();
     delay(60);
 
 }
