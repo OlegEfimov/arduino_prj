@@ -3,13 +3,14 @@
 
 
 #include <Arduino.h>
+#include <NewPing.h>
 
 //#include <ESP8266WiFi.h>
 //#include <ESP8266WiFiMulti.h>
 //#include <WebSocketsServer.h>
 //#include <Hash.h>
 
-
+#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 // #define USE_SERIAL Serial1
 //////////////////////
@@ -46,12 +47,13 @@ int echoPin5 = 33;
 unsigned long time1;
 unsigned long time2;
 
+unsigned long d0;
 unsigned long d1;
 unsigned long d2;
 unsigned long d3;
 unsigned long d4;
 unsigned long d5;
-unsigned long d6;
+
 char tbs[500];
 char divider;
 String tmpString = "100,\t200,\t300,\t400,\t500,\t600;";
@@ -71,6 +73,13 @@ int intCmd2;
 //String inputString = "";         // a String to hold incoming data
 //bool stringComplete = false;  // whether the string is complete
 
+NewPing sonar0(trigPin0, trigPin0, MAX_DISTANCE);
+NewPing sonar1(trigPin1, trigPin1, MAX_DISTANCE);
+NewPing sonar2(trigPin2, trigPin2, MAX_DISTANCE);
+NewPing sonar3(trigPin3, trigPin3, MAX_DISTANCE);
+NewPing sonar4(trigPin4, trigPin4, MAX_DISTANCE);
+NewPing sonar5(trigPin5, trigPin5, MAX_DISTANCE);
+
 
 void setup() {
 
@@ -89,18 +98,18 @@ void setup() {
   Serial.begin (115200);
   Serial2.begin (115200);
 
-  pinMode(trigPin0, OUTPUT);
-  pinMode(echoPin0, INPUT);
-  pinMode(trigPin1, OUTPUT);
-  pinMode(echoPin1, INPUT);
-  pinMode(trigPin2, OUTPUT);
-  pinMode(echoPin2, INPUT);
-  pinMode(trigPin3, OUTPUT);
-  pinMode(echoPin3, INPUT);
-  pinMode(trigPin4, OUTPUT);
-  pinMode(echoPin4, INPUT);
-  pinMode(trigPin5, OUTPUT);
-  pinMode(echoPin5, INPUT);
+  // pinMode(trigPin0, OUTPUT);
+  // pinMode(echoPin0, INPUT);
+  // pinMode(trigPin1, OUTPUT);
+  // pinMode(echoPin1, INPUT);
+  // pinMode(trigPin2, OUTPUT);
+  // pinMode(echoPin2, INPUT);
+  // pinMode(trigPin3, OUTPUT);
+  // pinMode(echoPin3, INPUT);
+  // pinMode(trigPin4, OUTPUT);
+  // pinMode(echoPin4, INPUT);
+  // pinMode(trigPin5, OUTPUT);
+  // pinMode(echoPin5, INPUT);
 
   Serial2.setTimeout(60);
   Serial.println("setup mega ");
@@ -129,14 +138,47 @@ unsigned long getDistance(int trigPin, int echoPin)
   return _distance;
 }
  
-void getDistanceData()
+// void getDistanceData()
+// {
+//     d1 = getDistance(trigPin0 , echoPin0);
+//     d2 = getDistance(trigPin1, echoPin1);
+//     d3 = getDistance(trigPin2, echoPin2);
+//     d4 = getDistance(trigPin3, echoPin3);
+//     d5 = getDistance(trigPin4, echoPin4);
+//     d6 = getDistance(trigPin5, echoPin5);
+
+//     Serial2.print(d1);
+//     Serial2.print(",\t");
+
+//     Serial2.print(d2);
+//     Serial2.print(",\t");
+
+//     Serial2.print(d3);
+//     Serial2.print(",\t");
+
+//     Serial2.print(d4);
+//     Serial2.print(",\t");
+
+//     Serial2.print(d5);
+//     Serial2.print(",\t");
+
+//     Serial2.print(d6);
+//     Serial2.print(";");
+    
+// //    Serial2.print("=00=");
+// }
+
+void getDistanceFromNewSensors()
 {
-    d1 = getDistance(trigPin0 , echoPin0);
-    d2 = getDistance(trigPin1, echoPin1);
-    d3 = getDistance(trigPin2, echoPin2);
-    d4 = getDistance(trigPin3, echoPin3);
-    d5 = getDistance(trigPin4, echoPin4);
-    d6 = getDistance(trigPin5, echoPin5);
+    d0 = sonar0.ping_cm();
+    d1 = sonar1.ping_cm();
+    d2 = sonar2.ping_cm();
+    d3 = sonar3.ping_cm();
+    d4 = sonar4.ping_cm();
+    d5 = sonar5.ping_cm();
+
+    Serial2.print(d0);
+    Serial2.print(",\t");
 
     Serial2.print(d1);
     Serial2.print(",\t");
@@ -151,12 +193,8 @@ void getDistanceData()
     Serial2.print(",\t");
 
     Serial2.print(d5);
-    Serial2.print(",\t");
-
-    Serial2.print(d6);
     Serial2.print(";");
     
-//    Serial2.print("=00=");
 }
 
 void loop()
@@ -262,6 +300,7 @@ void loop()
       }
     }
 //    getDistanceData();
+    getDistanceFromNewSensors();
     delay(60);
 
 }
