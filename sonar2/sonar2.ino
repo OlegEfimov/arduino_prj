@@ -103,7 +103,7 @@ void setup() {
   pinMode(echoPin5, INPUT);
 
   Serial2.setTimeout(60);
-  Serial.println("setup mega ");
+  Serial.println("setup Mega ");
 //  Serial.flush();
 }
 
@@ -238,14 +238,14 @@ void loop()
           analogWrite(IN1,0);
           analogWrite(IN2,intCmd1);
         } else {
-          analogWrite(IN1,intCmd1);
+          analogWrite(IN1,(-1 * intCmd1));
           analogWrite(IN2,0);
         }
         if (intCmd2 > 0) {
           analogWrite(IN3,0);
           analogWrite(IN4,intCmd2);
         } else {
-          analogWrite(IN3,intCmd2);
+          analogWrite(IN3,(-1 * intCmd2));
           analogWrite(IN4,0);
         }
 //        Serial.println("--------end-----------");
