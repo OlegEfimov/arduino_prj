@@ -10,7 +10,7 @@
 //#include <WebSocketsServer.h>
 //#include <Hash.h>
 
-#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+#define MAX_DISTANCE 100 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 // #define USE_SERIAL Serial1
 //////////////////////
@@ -177,24 +177,24 @@ void getDistanceFromNewSensors()
     d4 = sonar4.ping_cm();
     d5 = sonar5.ping_cm();
 
-    Serial.print(d0);
-    Serial.print(",\t");
+    Serial2.print(d0);
+    Serial2.print(",\t");
 
-    Serial.print(d1);
-    Serial.print(",\t");
+    Serial2.print(d1);
+    Serial2.print(",\t");
 
-    Serial.print(d2);
-    Serial.print(",\t");
+    Serial2.print(d2);
+    Serial2.print(",\t");
 
-    Serial.print(d3);
-    Serial.print(",\t");
+    Serial2.print(d3);
+    Serial2.print(",\t");
 
-    Serial.print(d4);
-    Serial.print(",\t");
+    Serial2.print(d4);
+    Serial2.print(",\t");
 
-    Serial.print(d5);
-    Serial.print(";\n");
-    
+    Serial2.print(d5);
+    Serial2.print(";");
+
 }
 
 void loop()
@@ -246,8 +246,8 @@ void loop()
 
 
 //{
-    if (false){
-    // if (Serial2.available() > 0){
+    // if (false){
+    if (Serial2.available() > 0){
       for (int i = 0; i < 50; i++) {
         buf_in[i]=0;
       }
@@ -292,7 +292,7 @@ void loop()
 //        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
-        Serial.println("--------=<3-----------");
+        // Serial.println("--------=<3-----------");
          analogWrite(IN1,0);
          analogWrite(IN2,0);
          analogWrite(IN3,0);
