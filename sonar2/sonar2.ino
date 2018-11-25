@@ -10,6 +10,26 @@
 //#include <WebSocketsServer.h>
 //#include <Hash.h>
 
+int encoder_pin = 2;
+unsigned int rpm;
+volatile byte pulses;
+unsigned long timeold;
+unsigned int pulsesperturn = 20;
+void counter()
+{
+   pulses++;
+}
+
+int encoder_pin2 = 3;
+unsigned int rpm2;
+volatile byte pulses2;
+unsigned long timeold2;
+void counter2()
+{
+   pulses2++;
+}
+
+
 #define MAX_DISTANCE 100 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 // #define USE_SERIAL Serial1
@@ -31,18 +51,19 @@ static int  tmp777 = 0;
 int i;
 
 int trigPin0 = 22;
-int echoPin0 = 23;
 int trigPin1 = 24;
-int echoPin1 = 25;
 int trigPin2 = 26;
-int echoPin2 = 27;
-
 int trigPin3 = 28;
-int echoPin3 = 29;
 int trigPin4 = 30;
-int echoPin4 = 31;
 int trigPin5 = 32;
-int echoPin5 = 33;
+
+int trigPin6 = 23;
+int trigPin7 = 25;
+int trigPin8 = 27;
+int trigPin9 = 29;
+int trigPin10 = 31;
+int trigPin11 = 33;
+
 
 unsigned long time1;
 unsigned long time2;
@@ -53,6 +74,12 @@ unsigned long d2;
 unsigned long d3;
 unsigned long d4;
 unsigned long d5;
+unsigned long d6;
+unsigned long d7;
+unsigned long d8;
+unsigned long d9;
+unsigned long d10;
+unsigned long d11;
 
 char tbs[500];
 char divider;
@@ -79,6 +106,12 @@ NewPing sonar2(trigPin2, trigPin2, MAX_DISTANCE);
 NewPing sonar3(trigPin3, trigPin3, MAX_DISTANCE);
 NewPing sonar4(trigPin4, trigPin4, MAX_DISTANCE);
 NewPing sonar5(trigPin5, trigPin5, MAX_DISTANCE);
+NewPing sonar6(trigPin6, trigPin6, MAX_DISTANCE);
+NewPing sonar7(trigPin7, trigPin7, MAX_DISTANCE);
+NewPing sonar8(trigPin8, trigPin8, MAX_DISTANCE);
+NewPing sonar9(trigPin9, trigPin9, MAX_DISTANCE);
+NewPing sonar10(trigPin10, trigPin10, MAX_DISTANCE);
+NewPing sonar11(trigPin11, trigPin11, MAX_DISTANCE);
 
 
 void setup() {
@@ -112,6 +145,19 @@ void setup() {
   // pinMode(echoPin5, INPUT);
 
   Serial3.setTimeout(60);
+
+  pinMode(encoder_pin, INPUT);
+  attachInterrupt(0, counter, FALLING);
+  pulses = 0;
+  rpm = 0;
+  timeold = 0;
+
+  pinMode(encoder_pin2, INPUT);
+  attachInterrupt(1, counter2, FALLING);
+  pulses2 = 0;
+  rpm2 = 0;
+  timeold2 = 0;
+
   Serial.println("setup mega ");
 //  Serial.flush();
 }
@@ -176,6 +222,12 @@ void getDistanceFromNewSensors()
     d3 = sonar3.ping_cm();
     d4 = sonar4.ping_cm();
     d5 = sonar5.ping_cm();
+    d6 = sonar6.ping_cm();
+    d7 = sonar7.ping_cm();
+    d8 = sonar8.ping_cm();
+    d9 = sonar9.ping_cm();
+    d10 = sonar10.ping_cm();
+    d11 = sonar11.ping_cm();
 
     Serial3.print(d0);
     Serial3.print(",\t");
@@ -193,6 +245,24 @@ void getDistanceFromNewSensors()
     Serial3.print(",\t");
 
     Serial3.print(d5);
+    Serial3.print("\t");
+
+    Serial3.print(d6);
+    Serial3.print(",\t");
+
+    Serial3.print(d7);
+    Serial3.print(",\t");
+
+    Serial3.print(d8);
+    Serial3.print(",\t");
+
+    Serial3.print(d9);
+    Serial3.print(",\t");
+
+    Serial3.print(d10);
+    Serial3.print(",\t");
+
+    Serial3.print(d11);
     Serial3.print(";");
 
 }
@@ -244,6 +314,20 @@ void loop()
 //     delay(60);
 // }
 
+
+   if (millis() - timeold >= 1000) {
+      detachInterrupt(0);
+      detachInterrupt(1);
+      timeold = millis();
+      Serial.print("\tpulses = ");
+      Serial.print(pulses,DEC);
+      Serial.print("\tpulses2 = ");
+      Serial.println(pulses2,DEC);
+      pulses = 0;
+      pulses2 = 0;
+      attachInterrupt(0, counter, FALLING);
+      attachInterrupt(1, counter2, FALLING);
+   }
 
 //{
     // if (false){
