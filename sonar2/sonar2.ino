@@ -13,6 +13,8 @@
 int encoder_pin = 2;
 unsigned int rpm;
 volatile byte pulses;
+byte send_pulses;
+unsigned long time_space;
 unsigned long timeold;
 unsigned int pulsesperturn = 20;
 void counter()
@@ -23,6 +25,7 @@ void counter()
 int encoder_pin2 = 3;
 unsigned int rpm2;
 volatile byte pulses2;
+byte send_pulses2;
 unsigned long timeold2;
 void counter2()
 {
@@ -129,7 +132,7 @@ void setup() {
 //  pinMode (ENB, OUTPUT); 
 
   Serial.begin (115200);
-  Serial3.begin (115200);
+  Serial2.begin (115200);
 
   // pinMode(trigPin0, OUTPUT);
   // pinMode(echoPin0, INPUT);
@@ -144,7 +147,7 @@ void setup() {
   // pinMode(trigPin5, OUTPUT);
   // pinMode(echoPin5, INPUT);
 
-  Serial3.setTimeout(60);
+  Serial2.setTimeout(60);
 
   pinMode(encoder_pin, INPUT);
   attachInterrupt(0, counter, FALLING);
@@ -193,25 +196,25 @@ unsigned long getDistance(int trigPin, int echoPin)
 //     d5 = getDistance(trigPin4, echoPin4);
 //     d6 = getDistance(trigPin5, echoPin5);
 
-//     Serial3.print(d1);
-//     Serial3.print(",\t");
+//     Serial2.print(d1);
+//     Serial2.print(",\t");
 
-//     Serial3.print(d2);
-//     Serial3.print(",\t");
+//     Serial2.print(d2);
+//     Serial2.print(",\t");
 
-//     Serial3.print(d3);
-//     Serial3.print(",\t");
+//     Serial2.print(d3);
+//     Serial2.print(",\t");
 
-//     Serial3.print(d4);
-//     Serial3.print(",\t");
+//     Serial2.print(d4);
+//     Serial2.print(",\t");
 
-//     Serial3.print(d5);
-//     Serial3.print(",\t");
+//     Serial2.print(d5);
+//     Serial2.print(",\t");
 
-//     Serial3.print(d6);
-//     Serial3.print(";");
+//     Serial2.print(d6);
+//     Serial2.print(";");
     
-// //    Serial3.print("=00=");
+// //    Serial2.print("=00=");
 // }
 
 void getDistanceFromNewSensors()
@@ -228,42 +231,54 @@ void getDistanceFromNewSensors()
     d9 = sonar9.ping_cm();
     d10 = sonar10.ping_cm();
     d11 = sonar11.ping_cm();
+}
 
-    Serial3.print(d0);
-    Serial3.print(",\t");
+void sendSensorsData()
+{
+    Serial2.print(d0);
+    Serial2.print(",\t");
 
-    Serial3.print(d1);
-    Serial3.print(",\t");
+    Serial2.print(d1);
+    Serial2.print(",\t");
 
-    Serial3.print(d2);
-    Serial3.print(",\t");
+    Serial2.print(d2);
+    Serial2.print(",\t");
 
-    Serial3.print(d3);
-    Serial3.print(",\t");
+    Serial2.print(d3);
+    Serial2.print(",\t");
 
-    Serial3.print(d4);
-    Serial3.print(",\t");
+    Serial2.print(d4);
+    Serial2.print(",\t");
 
-    Serial3.print(d5);
-    Serial3.print("\t");
+    Serial2.print(d5);
+    Serial2.print(",\t");
 
-    Serial3.print(d6);
-    Serial3.print(",\t");
+    Serial2.print(d6);
+    Serial2.print(",\t");
 
-    Serial3.print(d7);
-    Serial3.print(",\t");
+    Serial2.print(d7);
+    Serial2.print(",\t");
 
-    Serial3.print(d8);
-    Serial3.print(",\t");
+    Serial2.print(d8);
+    Serial2.print(",\t");
 
-    Serial3.print(d9);
-    Serial3.print(",\t");
+    Serial2.print(d9);
+    Serial2.print(",\t");
 
-    Serial3.print(d10);
-    Serial3.print(",\t");
+    Serial2.print(d10);
+    Serial2.print(",\t");
 
-    Serial3.print(d11);
-    Serial3.print(";");
+    Serial2.print(d11);
+    Serial2.print(",\t");
+
+    Serial2.print(send_pulses);
+    Serial2.print(",\t");
+
+    Serial2.print(send_pulses2);
+    Serial2.print(",\t");
+
+    Serial2.print(time_space);
+    Serial2.print(";");
 
 }
 
@@ -291,7 +306,7 @@ void loop()
 //        Serial.println(command2);
 //        Serial.println("--------end-----------");
 //      } else {
-////        Serial3.write(buf_in, lenght_in);
+////        Serial2.write(buf_in, lenght_in);
 //        Serial.println("--------=<3-----------");
 ////        Serial.println();
 //      }
@@ -302,8 +317,8 @@ void loop()
 //  }
 
 // {
-//     if (Serial3.available() > 0){
-//       String commands = Serial3.readUntil(divider);
+//     if (Serial2.available() > 0){
+//       String commands = Serial2.readUntil(divider);
 //       if (commands.lenght() > 3) {
 //         Serial.write(commands);
 //       } else {
@@ -314,29 +329,30 @@ void loop()
 //     delay(60);
 // }
 
-
-   if (millis() - timeold >= 1000) {
+      time_space = millis() - timeold;
       detachInterrupt(0);
       detachInterrupt(1);
       timeold = millis();
       Serial.print("\tpulses = ");
       Serial.print(pulses,DEC);
       Serial.print("\tpulses2 = ");
-      Serial.println(pulses2,DEC);
+      Serial.print(pulses2,DEC);
+      Serial.print("\time_space = ");
+      Serial.println(time_space,DEC);
+      send_pulses = pulses;
+      send_pulses2 = pulses2;
+
       pulses = 0;
       pulses2 = 0;
-      attachInterrupt(0, counter, FALLING);
-      attachInterrupt(1, counter2, FALLING);
-   }
 
 //{
     // if (false){
-    if (Serial3.available() > 0){
+    if (Serial2.available() > 0){
       for (int i = 0; i < 50; i++) {
         buf_in[i]=0;
       }
-//      Serial3.print(" =0= ");
-      lenght_in = Serial3.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
+//      Serial2.print(" =0= ");
+      lenght_in = Serial2.readBytesUntil(divider, buf_in, LENGHT_BUF_IN);
 //      if (lenght_in > 3 && lenght_in < 11) {
       if (true) {
         buf_in[lenght_in] = 0;
@@ -375,7 +391,7 @@ void loop()
         }
 //        Serial.println("--------end-----------");
       } else {
-//        Serial3.write(buf_in, lenght_in);
+//        Serial2.write(buf_in, lenght_in);
         // Serial.println("--------=<3-----------");
          analogWrite(IN1,0);
          analogWrite(IN2,0);
@@ -386,6 +402,12 @@ void loop()
     }
 //    getDistanceData();
     getDistanceFromNewSensors();
+
+    sendSensorsData();
+
+    attachInterrupt(0, counter, FALLING);
+    attachInterrupt(1, counter2, FALLING);
+
     delay(100);
     // delay(60);
 
@@ -395,7 +417,7 @@ void loop()
 ////Serial.println("---serialEvent()---");
 //
 //    // get the new byte:
-//    char inChar = (char)Serial3.read();
+//    char inChar = (char)Serial2.read();
 //    // add it to the inputString:
 //    inputString += inChar;
 //    // if the incoming character is a newline, set a flag so the main loop can
