@@ -33,7 +33,7 @@ void counter2()
 }
 
 
-#define MAX_DISTANCE 100 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+#define MAX_DISTANCE 35 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 // #define USE_SERIAL Serial1
 //////////////////////
@@ -103,18 +103,18 @@ int intCmd2;
 //String inputString = "";         // a String to hold incoming data
 //bool stringComplete = false;  // whether the string is complete
 
-NewPing sonar0(trigPin0, trigPin0, MAX_DISTANCE);
-NewPing sonar1(trigPin1, trigPin1, MAX_DISTANCE);
-NewPing sonar2(trigPin2, trigPin2, MAX_DISTANCE);
-NewPing sonar3(trigPin3, trigPin3, MAX_DISTANCE);
-NewPing sonar4(trigPin4, trigPin4, MAX_DISTANCE);
-NewPing sonar5(trigPin5, trigPin5, MAX_DISTANCE);
-NewPing sonar6(trigPin6, trigPin6, MAX_DISTANCE);
-NewPing sonar7(trigPin7, trigPin7, MAX_DISTANCE);
-NewPing sonar8(trigPin8, trigPin8, MAX_DISTANCE);
-NewPing sonar9(trigPin9, trigPin9, MAX_DISTANCE);
-NewPing sonar10(trigPin10, trigPin10, MAX_DISTANCE);
-NewPing sonar11(trigPin11, trigPin11, MAX_DISTANCE);
+NewPing sonar0(trigPin0, trigPin0, 15);
+NewPing sonar1(trigPin1, trigPin1, 25);
+NewPing sonar2(trigPin2, trigPin2, 55);
+NewPing sonar3(trigPin3, trigPin3, 55);
+NewPing sonar4(trigPin4, trigPin4, 25);
+NewPing sonar5(trigPin5, trigPin5, 15);
+NewPing sonar6(trigPin6, trigPin6, 15);
+NewPing sonar7(trigPin7, trigPin7, 25);
+NewPing sonar8(trigPin8, trigPin8, 55);
+NewPing sonar9(trigPin9, trigPin9, 55);
+NewPing sonar10(trigPin10, trigPin10, 25);
+NewPing sonar11(trigPin11, trigPin11, 15);
 
 
 void setup() {
