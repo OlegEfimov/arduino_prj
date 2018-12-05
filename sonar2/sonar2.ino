@@ -77,12 +77,12 @@ unsigned long d2;
 unsigned long d3;
 unsigned long d4;
 unsigned long d5;
-unsigned long d6;
+// unsigned long d6;
 unsigned long d7;
 unsigned long d8;
 unsigned long d9;
 unsigned long d10;
-unsigned long d11;
+// unsigned long d11;
 
 char tbs[500];
 char divider;
@@ -109,12 +109,12 @@ NewPing sonar2(trigPin2, trigPin2, 55);
 NewPing sonar3(trigPin3, trigPin3, 55);
 NewPing sonar4(trigPin4, trigPin4, 25);
 NewPing sonar5(trigPin5, trigPin5, 15);
-NewPing sonar6(trigPin6, trigPin6, 15);
-NewPing sonar7(trigPin7, trigPin7, 25);
-NewPing sonar8(trigPin8, trigPin8, 55);
-NewPing sonar9(trigPin9, trigPin9, 55);
-NewPing sonar10(trigPin10, trigPin10, 25);
-NewPing sonar11(trigPin11, trigPin11, 15);
+// NewPing sonar6(trigPin6, trigPin6, 15);
+NewPing sonar7(trigPin7, trigPin7, 20);
+NewPing sonar8(trigPin8, trigPin8, 25);
+NewPing sonar9(trigPin9, trigPin9, 25);
+NewPing sonar10(trigPin10, trigPin10, 20);
+// NewPing sonar11(trigPin11, trigPin11, 15);
 
 
 void setup() {
@@ -225,12 +225,12 @@ void getDistanceFromNewSensors()
     d3 = sonar3.ping_cm();
     d4 = sonar4.ping_cm();
     d5 = sonar5.ping_cm();
-    d6 = sonar6.ping_cm();
+    // d6 = sonar6.ping_cm();
     d7 = sonar7.ping_cm();
     d8 = sonar8.ping_cm();
     d9 = sonar9.ping_cm();
     d10 = sonar10.ping_cm();
-    d11 = sonar11.ping_cm();
+    // d11 = sonar11.ping_cm();
 }
 
 void sendSensorsData()
@@ -253,8 +253,8 @@ void sendSensorsData()
     Serial2.print(d5);
     Serial2.print(",\t");
 
-    Serial2.print(d6);
-    Serial2.print(",\t");
+    // Serial2.print(d6);
+    // Serial2.print(",\t");
 
     Serial2.print(d7);
     Serial2.print(",\t");
@@ -268,8 +268,8 @@ void sendSensorsData()
     Serial2.print(d10);
     Serial2.print(",\t");
 
-    Serial2.print(d11);
-    Serial2.print(",\t");
+    // Serial2.print(d11);
+    // Serial2.print(",\t");
 
     Serial2.print(send_pulses);
     Serial2.print(",\t");
