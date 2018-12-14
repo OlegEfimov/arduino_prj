@@ -282,6 +282,55 @@ void sendSensorsData()
 
 }
 
+void printSensorsData()
+{
+    Serial.print(d0);
+    Serial.print(",\t");
+
+    Serial.print(d1);
+    Serial.print(",\t");
+
+    Serial.print(d2);
+    Serial.print(",\t");
+
+    Serial.print(d3);
+    Serial.print(",\t");
+
+    Serial.print(d4);
+    Serial.print(",\t");
+
+    Serial.print(d5);
+    Serial.print(",\t");
+
+    // Serial.print(d6);
+    // Serial.print(",\t");
+
+    Serial.print(d7);
+    Serial.print(",\t");
+
+    Serial.print(d8);
+    Serial.print(",\t");
+
+    Serial.print(d9);
+    Serial.print(",\t");
+
+    Serial.print(d10);
+    Serial.print(",\t");
+
+    // Serial.print(d11);
+    // Serial.print(",\t");
+
+    Serial.print(send_pulses);
+    Serial.print(",\t");
+
+    Serial.print(send_pulses2);
+    Serial.print(",\t");
+
+    Serial.print(time_space);
+    Serial.print(";");
+
+}
+
 void loop()
 {
 //  // print the string when a newline arrives:
@@ -403,6 +452,7 @@ void loop()
 //    getDistanceData();
     getDistanceFromNewSensors();
 
+//    printSensorsData();
     sendSensorsData();
 
     attachInterrupt(0, counter, FALLING);
