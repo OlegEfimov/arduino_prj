@@ -17,6 +17,8 @@ byte send_pulses;
 unsigned long time_space;
 unsigned long timeold;
 unsigned int pulsesperturn = 20;
+unsigned int tackt = 0;
+String commandStr;
 void counter()
 {
    pulses++;
@@ -233,7 +235,7 @@ void getDistanceFromNewSensors()
     // d11 = sonar11.ping_cm();
 }
 
-void sendSensorsData()
+void sendSensorsData(String &str)
 {
     Serial2.print(d0);
     Serial2.print(",\t");
@@ -271,15 +273,18 @@ void sendSensorsData()
     // Serial2.print(d11);
     // Serial2.print(",\t");
 
-    Serial2.print(send_pulses);
+    Serial2.print(str);
+    // Serial2.print(send_pulses);
     Serial2.print(",\t");
 
-    Serial2.print(send_pulses2);
+    Serial2.print(tackt);
+    // Serial2.print(send_pulses2);
     Serial2.print(",\t");
 
-    Serial2.print(time_space);
+    // Serial2.print(time_space);
+    Serial2.print(timeold);
     Serial2.print(";");
-
+    tackt = tackt + 1;
 }
 
 void printSensorsData()
@@ -406,15 +411,15 @@ void loop()
       if (true) {
         buf_in[lenght_in] = 0;
         String commandStr(buf_in);
-        int pos1 = commandStr.indexOf('=');
-        int pos2 = commandStr.indexOf('=', pos1+1);
-        String command1 = commandStr.substring(0, pos1);
-        String command2 = commandStr.substring(pos1+1, pos2);
-        intCmd1 = command1.toInt();
-        intCmd2 = command2.toInt();
-        Serial.println(intCmd1);
-        Serial.println(intCmd2);
-        Serial.println(commandStr);
+        // int pos1 = commandStr.indexOf('=');
+        // int pos2 = commandStr.indexOf('=', pos1+1);
+        // String command1 = commandStr.substring(0, pos1);
+        // String command2 = commandStr.substring(pos1+1, pos2);
+        // intCmd1 = command1.toInt();
+        // intCmd2 = command2.toInt();
+        // Serial.println(intCmd1);
+        // Serial.println(intCmd2);
+        // Serial.println(commandStr);
 
 //         Serial.write(buf_in, lenght_in);
 //        Serial.println("--------start---------");
@@ -424,20 +429,20 @@ void loop()
 //        Serial.println(pos2);
 //        Serial.println(command1);
 //        Serial.println(command2);
-        if (intCmd1 > 0) {
-          analogWrite(IN1,0);
-          analogWrite(IN2,intCmd1);
-        } else {
-          analogWrite(IN1,-intCmd1);
-          analogWrite(IN2,0);
-        }
-        if (intCmd2 > 0) {
-          analogWrite(IN3,0);
-          analogWrite(IN4,intCmd2);
-        } else {
-          analogWrite(IN3,-intCmd2);
-          analogWrite(IN4,0);
-        }
+        // if (intCmd1 > 0) {
+        //   analogWrite(IN1,0);
+        //   analogWrite(IN2,intCmd1);
+        // } else {
+        //   analogWrite(IN1,-intCmd1);
+        //   analogWrite(IN2,0);
+        // }
+        // if (intCmd2 > 0) {
+        //   analogWrite(IN3,0);
+        //   analogWrite(IN4,intCmd2);
+        // } else {
+        //   analogWrite(IN3,-intCmd2);
+        //   analogWrite(IN4,0);
+        // }
 //        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
@@ -453,7 +458,8 @@ void loop()
     getDistanceFromNewSensors();
 
 //    printSensorsData();
-    sendSensorsData();
+    // sendSensorsData();
+    sendSensorsData(commandStr);
 
     attachInterrupt(0, counter, FALLING);
     attachInterrupt(1, counter2, FALLING);
