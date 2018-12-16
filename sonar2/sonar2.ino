@@ -98,7 +98,7 @@ char buf_in[LENGHT_BUF_IN];
 int lenght_in;
 int lenght_out;
 
-int intCmd1;
+unsigned long intCmd1;
 int intCmd2;
 
 
@@ -235,7 +235,7 @@ void getDistanceFromNewSensors()
     // d11 = sonar11.ping_cm();
 }
 
-void sendSensorsData(String &str)
+void sendSensorsData(unsigned long old_intCmd1)
 {
     Serial2.print(d0);
     Serial2.print(",\t");
@@ -273,18 +273,21 @@ void sendSensorsData(String &str)
     // Serial2.print(d11);
     // Serial2.print(",\t");
 
-    Serial2.print(str);
+    Serial2.print(tackt);
     // Serial2.print(send_pulses);
     Serial2.print(",\t");
 
-    Serial2.print(tackt);
+    Serial2.print(timeold);
     // Serial2.print(send_pulses2);
     Serial2.print(",\t");
 
     // Serial2.print(time_space);
-    Serial2.print(timeold);
-    Serial2.print(";");
+    Serial2.print(old_intCmd1);
+    Serial2.println(";");
     tackt = tackt + 1;
+    
+    Serial.print(old_intCmd1);
+    Serial.println("  ");
 }
 
 void printSensorsData()
@@ -387,12 +390,12 @@ void loop()
       detachInterrupt(0);
       detachInterrupt(1);
       timeold = millis();
-      Serial.print("\tpulses = ");
-      Serial.print(pulses,DEC);
-      Serial.print("\tpulses2 = ");
-      Serial.print(pulses2,DEC);
-      Serial.print("\time_space = ");
-      Serial.println(time_space,DEC);
+//      Serial.print("\tpulses = ");
+//      Serial.print(pulses,DEC);
+//      Serial.print("\tpulses2 = ");
+//      Serial.print(pulses2,DEC);
+//      Serial.print("\time_space = ");
+//      Serial.println(time_space,DEC);
       send_pulses = pulses;
       send_pulses2 = pulses2;
 
@@ -411,12 +414,12 @@ void loop()
       if (true) {
         buf_in[lenght_in] = 0;
         String commandStr(buf_in);
-        // int pos1 = commandStr.indexOf('=');
-        // int pos2 = commandStr.indexOf('=', pos1+1);
-        // String command1 = commandStr.substring(0, pos1);
-        // String command2 = commandStr.substring(pos1+1, pos2);
-        // intCmd1 = command1.toInt();
-        // intCmd2 = command2.toInt();
+         int pos1 = commandStr.indexOf('=');
+         int pos2 = commandStr.indexOf('=', pos1+1);
+         String command1 = commandStr.substring(0, pos1);
+         String command2 = commandStr.substring(pos1+1, pos2);
+         intCmd1 = command1.toInt();
+         intCmd2 = command2.toInt();
         // Serial.println(intCmd1);
         // Serial.println(intCmd2);
         // Serial.println(commandStr);
@@ -459,7 +462,7 @@ void loop()
 
 //    printSensorsData();
     // sendSensorsData();
-    sendSensorsData(commandStr);
+    sendSensorsData(intCmd1);
 
     attachInterrupt(0, counter, FALLING);
     attachInterrupt(1, counter2, FALLING);
