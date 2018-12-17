@@ -19,6 +19,8 @@ unsigned long timeold;
 unsigned int pulsesperturn = 20;
 unsigned int tackt = 0;
 String commandStr;
+//String command1;
+//String command2;
 void counter()
 {
    pulses++;
@@ -235,7 +237,7 @@ void getDistanceFromNewSensors()
     // d11 = sonar11.ping_cm();
 }
 
-void sendSensorsData(unsigned long old_intCmd1)
+void sendSensorsData(String &old_Command1)
 {
     Serial2.print(d0);
     Serial2.print(",\t");
@@ -282,12 +284,12 @@ void sendSensorsData(unsigned long old_intCmd1)
     Serial2.print(",\t");
 
     // Serial2.print(time_space);
-    Serial2.print(old_intCmd1);
+    Serial2.print(old_Command1);
     Serial2.println(";");
     tackt = tackt + 1;
     
-    Serial.print(old_intCmd1);
-    Serial.println("  ");
+//    Serial.print(old_Command1);
+//    Serial.println("  ");
 }
 
 void printSensorsData()
@@ -386,6 +388,8 @@ void loop()
 //     delay(60);
 // }
 
+String commandTmp = "TestTmp";
+
       time_space = millis() - timeold;
       detachInterrupt(0);
       detachInterrupt(1);
@@ -417,12 +421,14 @@ void loop()
          int pos1 = commandStr.indexOf('=');
          int pos2 = commandStr.indexOf('=', pos1+1);
          String command1 = commandStr.substring(0, pos1);
+         commandTmp = commandStr.substring(0, pos1);
          String command2 = commandStr.substring(pos1+1, pos2);
          intCmd1 = command1.toInt();
          intCmd2 = command2.toInt();
-        // Serial.println(intCmd1);
-        // Serial.println(intCmd2);
-        // Serial.println(commandStr);
+         Serial.println(intCmd1);
+         Serial.println(intCmd2);
+         Serial.println(commandTmp);
+        Serial.println(commandStr);
 
 //         Serial.write(buf_in, lenght_in);
 //        Serial.println("--------start---------");
@@ -446,7 +452,7 @@ void loop()
         //   analogWrite(IN3,-intCmd2);
         //   analogWrite(IN4,0);
         // }
-//        Serial.println("--------end-----------");
+        Serial.println("--------end-----------");
       } else {
 //        Serial2.write(buf_in, lenght_in);
         // Serial.println("--------=<3-----------");
@@ -456,17 +462,20 @@ void loop()
          analogWrite(IN4,0);
 //        Serial.println();
       }
-    }
+    
 //    getDistanceData();
     getDistanceFromNewSensors();
 
 //    printSensorsData();
     // sendSensorsData();
-    sendSensorsData(intCmd1);
+    sendSensorsData(commandTmp);
+    
+    }
 
     attachInterrupt(0, counter, FALLING);
     attachInterrupt(1, counter2, FALLING);
 
+//    delay(2000);
     delay(100);
     // delay(60);
 
