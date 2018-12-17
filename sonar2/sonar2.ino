@@ -399,11 +399,13 @@ void loop()
          analogWrite(IN4,0);
 //        Serial.println();
       }
-    }
+    // }
 //    getDistanceData();
     getDistanceFromNewSensors();
 
     sendSensorsData();
+
+  }
 
     attachInterrupt(0, counter, FALLING);
     attachInterrupt(1, counter2, FALLING);
