@@ -410,7 +410,7 @@ void loop()
     attachInterrupt(0, counter, FALLING);
     attachInterrupt(1, counter2, FALLING);
 
-    delay(100);
+    delay(10);
     // delay(60);
 
 }
