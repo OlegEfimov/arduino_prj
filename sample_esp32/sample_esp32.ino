@@ -2,14 +2,14 @@
 #include "pins_arduino.h"
 #include <Arduino.h>
 
-
-#include <ESP8266WiFi.h>
+#include "WiFi.h"
+//#include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <WebSocketsServer.h>
-#include <Hash.h>
+//#include <Hash.h>
 
-const char* ssid = "Berg";
-const char* password = "robinbobin315";
+const char* ssid = "esp32_01";
+const char* password = "aaaa";
 
 WebSocketsServer webSocket = WebSocketsServer(81);
 
@@ -134,4 +134,3 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
     cmdReady = 1;
   }
 }
-
